@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contenu du Module</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #1e293b;
+            --primary: #0ea5e9;
+            --accent: #38bdf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(14, 165, 233, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover { background: rgba(255,255,255,0.15); }
+
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+
+        .lesson-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .lesson-card h3 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: var(--accent);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 12px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .resource-item:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        .resource-item i { width: 18px; height: 18px; }
+
+        #loader { text-align: center; margin-top: 100px; color: var(--text-dim); }
+
+        @media (max-width: 600px) {
+            .resource-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="back-btn"><i data-lucide="arrow-left"></i> Retour</a>
+    <h2 id="title" style="margin:0; font-size: 1.2rem;">Module</h2>
+    <div style="width: 80px;"></div> </header>
+
+<div class="container">
+    <div id="loader">Chargement du contenu...</div>
+    <div id="content"></div>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const name = params.get("name");
+const titre = params.get("titre") || "Module";
+
+document.getElementById("title").innerText = titre;
+
+const API = "https://script.google.com/macros/s/AKfycbxSoWJFnf8-6bX8ht7AX93MneYvce1kn0X-he6kjCYVtYO0ZQURbhzoa7S_cpJM7BVb/exec?action=module&name=" + name;
+
+fetch(API)
+.then(r=>r.json())
+.then(data=>{
+    const container = document.getElementById("content");
+    document.getElementById("loader").style.display = "none";
+
+    data.forEach(lesson=>{
+        const card = document.createElement("div");
+        card.className = "lesson-card";
+        
+        let resourcesHTML = "";
+        
+        if(lesson.video) 
+            resourcesHTML += `<a href="${lesson.video}" target="_blank" class="resource-item"><i data-lucide="play-circle"></i> Vidéo du cours</a>`;
+        
+        if(lesson.pdf) 
+            resourcesHTML += `<a href="${lesson.pdf}" target="_blank" class="resource-item"><i data-lucide="file-text"></i> Support PDF</a>`;
+        
+        if(lesson.image) 
+            resourcesHTML += `<a href="${lesson.image}" target="_blank" class="resource-item"><i data-lucide="image"></i> Schéma / Image</a>`;
+
+        card.innerHTML = `
+            <h3>${lesson.titre}</h3>
+            <div class="resource-grid">
+                ${resourcesHTML}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+    lucide.createIcons();
+})
+.catch(err => {
+    document.getElementById("loader").innerHTML = "Erreur lors du chargement des leçons.";
+});
+</script>
+
+</body>
+</html>

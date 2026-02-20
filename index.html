@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursus Web | Bentaiba Rafik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #2563eb;
+            --success: #22c55e;
+            --warning: #facc15;
+            --locked: #64748b;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            padding: 50px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+        }
+
+        /* --- STYLE DE L'INSTRUCTOR CARD & AVATAR --- */
+        .instructor-card {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .instructor-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            margin-right: 15px;
+            border: 2px solid white;
+            object-fit: cover;
+            cursor: zoom-in; /* Indique que c'est agrandissable */
+            transition: transform 0.2s;
+        }
+
+        .instructor-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- MODAL / LIGHTBOX POUR L'IMAGE --- */
+        #img-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+            animation: fadeIn 0.3s;
+        }
+
+        #img-modal img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            transform: scale(0.8);
+            animation: zoomIn 0.3s forwards;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.8); } to { transform: scale(1); } }
+
+        /* --- RESTE DU DESIGN --- */
+        .instructor-info { text-align: left; }
+        .instructor-name { font-weight: 700; display: block; font-size: 1rem; color: white; }
+        .instructor-label { color: #bfdbfe; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+
+        header h1 { margin: 15px 0; font-size: 2.5rem; font-weight: 800; }
+
+        .global-progress { max-width: 450px; margin: 25px auto 0 auto; background: rgba(0,0,0,0.15); padding: 15px; border-radius: 12px; }
+        .progress-track { background: rgba(255,255,255,0.2); height: 10px; border-radius: 10px; overflow: hidden; margin-top: 10px; }
+        .progress-fill { background: var(--warning); height: 100%; width: 0%; transition: width 1.2s ease; }
+
+        .container { max-width: 800px; margin: auto; padding: 0 20px 100px 20px; }
+        #loader { text-align: center; padding: 40px; color: var(--text-dim); }
+        .timeline { display: flex; flex-direction: column; gap: 16px; }
+
+        .step {
+            background: var(--card-bg);
+            padding: 22px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .step:not(.locked):hover {
+            transform: translateY(-4px);
+            background: #243147;
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .status-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .content { flex-grow: 1; }
+        .content b { font-size: 1.15rem; display: block; margin-bottom: 4px; }
+        .content span { color: var(--text-dim); font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+
+        .done { border-left: 6px solid var(--success); }
+        .done .status-icon { background: rgba(34, 197, 94, 0.15); color: var(--success); }
+        .current { border-left: 6px solid var(--warning); }
+        .current .status-icon { background: rgba(250, 204, 21, 0.15); color: var(--warning); }
+        .locked { border-left: 6px solid var(--locked); opacity: 0.6; cursor: not-allowed; }
+        .locked .status-icon { background: rgba(100, 116, 139, 0.1); color: var(--locked); }
+    </style>
+</head>
+<body>
+
+<div id="img-modal" onclick="closeImg()">
+    <img id="modal-img" src="" alt="Agrandissement">
+</div>
+
+<header>
+    <div class="instructor-card">
+        <img src="9.png" 
+             alt="Bentaiba Rafik" 
+             class="instructor-img" 
+             onclick="openImg(this.src)">
+        <div class="instructor-info">
+            <span class="instructor-name">Bentaiba Rafik</span>
+            <span class="instructor-label">Expert Formateur</span>
+        </div>
+    </div>
+
+    <h1>🎓 Cursus Frontend</h1>
+
+    <div class="global-progress">
+        <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700">
+            <span>PROGRESSION DU CURSUS</span>
+            <span id="stat-percent">0%</span>
+        </div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-bar"></div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div id="loader">Initialisation du cursus étudiant...</div>
+    <div class="timeline" id="timeline"></div>
+</div>
+
+<script>
+// --- FONCTIONS POUR L'IMAGE ---
+function openImg(src) {
+    const modal = document.getElementById('img-modal');
+    const modalImg = document.getElementById('modal-img');
+    modalImg.src = src;
+    modal.style.display = 'flex';
+}
+
+function closeImg() {
+    document.getElementById('img-modal').style.display = 'none';
+}
+
+// --- LOGIQUE API ---
+const API = "https://script.google.com/macros/s/AKfycbxSoWJFnf8-6bX8ht7AX93MneYvce1kn0X-he6kjCYVtYO0ZQURbhzoa7S_cpJM7BVb/exec?action=cursus";
+
+const statusConfig = {
+    done: { icon: 'check-circle', label: 'Terminé' },
+    current: { icon: 'play-circle', label: 'En cours' },
+    locked: { icon: 'lock', label: 'À venir' }
+};
+
+fetch(API)
+    .then(r => r.json())
+    .then(data => {
+        const timeline = document.getElementById("timeline");
+        document.getElementById("loader").style.display = "none";
+
+        const total = data.length;
+        const finished = data.filter(m => m.statut === 'done').length;
+        const progressPercent = Math.round((finished / total) * 100);
+        
+        document.getElementById("progress-bar").style.width = progressPercent + "%";
+        document.getElementById("stat-percent").innerText = progressPercent + "%";
+
+        data.forEach(m => {
+            const config = statusConfig[m.statut] || statusConfig.locked;
+            const card = document.createElement("div");
+            card.className = `step ${m.statut}`;
+            
+            card.innerHTML = `
+                <div class="status-icon"><i data-lucide="${config.icon}"></i></div>
+                <div class="content">
+                    <b>${m.titre}</b>
+                    <span><i data-lucide="clock" style="width:14px"></i> ${m.duree} • ${config.label}</span>
+                </div>
+                ${m.statut !== 'locked' ? '<i data-lucide="arrow-right" style="color:#475569"></i>' : ''}
+            `;
+
+            if (m.statut !== "locked") {
+                card.onclick = () => {
+                    location.href = `module.html?name=${encodeURIComponent(m.feuille_module)}&titre=${encodeURIComponent(m.titre)}`;
+                };
+            }
+            timeline.appendChild(card);
+        });
+        lucide.createIcons();
+    })
+    .catch(err => {
+        document.getElementById("loader").innerHTML = `<div class="error-msg">Erreur de chargement.</div>`;
+    });
+</script>
+
+</body>
+</html>
