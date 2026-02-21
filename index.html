@@ -59,12 +59,19 @@
 
         .container { max-width: 900px; margin: auto; padding: 0 20px 100px 20px; }
         
+        /* TIMELINE STYLE */
         .timeline { display: flex; flex-direction: column; gap: 16px; margin-bottom: 60px; }
         .step {
             background: var(--card-bg); padding: 22px; border-radius: 18px;
             display: flex; align-items: center; gap: 20px;
             transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.05);
             text-decoration: none; color: inherit;
+            cursor: pointer;
+        }
+        .step:hover {
+            transform: translateX(8px);
+            background: #2d3a4f;
+            border-color: var(--primary);
         }
 
         .status-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -73,7 +80,7 @@
         
         .done { border-left: 6px solid var(--success); }
         .current { border-left: 6px solid var(--warning); }
-        .locked { border-left: 6px solid var(--locked); opacity: 0.6; }
+        .locked { border-left: 6px solid var(--locked); opacity: 0.6; pointer-events: none; }
 
         .schedule-card {
             background: var(--card-bg); border-radius: 20px;
@@ -89,7 +96,6 @@
             th { background: rgba(255,255,255,0.03); color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase; }
             .month-cell { font-weight: bold; background: rgba(37, 99, 235, 0.05); }
             
-            /* Cacher les éléments mobiles sur PC */
             .mobile-header, .mobile-only { display: none !important; }
             
             .vacation { background: rgba(250, 204, 21, 0.1) !important; color: var(--warning); }
@@ -111,7 +117,6 @@
             }
             td:last-child { border-bottom: none; }
             
-            /* Cacher les cellules fusionnées (rowspan) sur mobile */
             .pc-fusion { display: none !important; }
 
             td::before { 
@@ -166,51 +171,47 @@
                     <td rowspan="2" class="month-cell pc-fusion">Février</td>
                     <td class="mobile-header">Février</td>
                     <td data-label="Semaine">Semaine 1</td>
-                    <td data-label="Début">15/02</td>
-                    <td data-label="Fin">19/02</td>
-                    <td rowspan="4" class="comp-cell pc-fusion">Initiation</td> <td class="mobile-only" data-label="Compétence">Initiation Web</td> </tr>
+                    <td data-label="Début">15/02</td><td data-label="Fin">19/02</td>
+                    <td rowspan="4" class="comp-cell pc-fusion">Initiation Web</td>
+                    <td class="mobile-only" data-label="Compétence">Initiation Web</td>
+                </tr>
                 <tr>
                     <td class="mobile-header">Février</td>
                     <td data-label="Semaine">Semaine 2</td>
-                    <td data-label="Début">22/02</td>
-                    <td data-label="Fin">26/02</td>
-                    <td class="mobile-only" data-label="Compétence">Initiation</td>
+                    <td data-label="Début">22/02</td><td data-label="Fin">26/02</td>
+                    <td class="mobile-only" data-label="Compétence">Initiation Web</td>
                 </tr>
 
                 <tr>
                     <td rowspan="5" class="month-cell pc-fusion">Mars</td>
                     <td class="mobile-header">Mars</td>
                     <td data-label="Semaine">Semaine 3</td>
-                    <td data-label="Début">01/03</td>
-                    <td data-label="Fin">05/03</td>
-                    <td class="mobile-only" data-label="Compétence">Initiation</td>
+                    <td data-label="Début">01/03</td><td data-label="Fin">05/03</td>
+                    <td class="mobile-only" data-label="Compétence">Initiation Web</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Mars</td>
                     <td data-label="Semaine">Semaine 4</td>
-                    <td data-label="Début">08/03</td>
-                    <td data-label="Fin">12/03</td>
-                    <td class="mobile-only" data-label="Compétence">Initiation</td>
+                    <td data-label="Début">08/03</td><td data-label="Fin">12/03</td>
+                    <td class="mobile-only" data-label="Compétence">Initiation Web</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Mars</td>
                     <td data-label="Semaine">Semaine 5</td>
-                    <td data-label="Début">15/03</td>
-                    <td data-label="Fin">19/03</td>
-                    <td data-label="Compétence" class="comp-cell">Intro Technique Web</td>
+                    <td data-label="Début">15/03</td><td data-label="Fin">19/03</td>
+                    <td data-label="Compétence" class="comp-cell">Intro Technique</td>
                 </tr>
                 <tr class="vacation">
                     <td class="mobile-header">Mars</td>
                     <td data-label="Semaine">Semaine 6</td>
-                    <td data-label="Début">22/03</td>
-                    <td data-label="Fin">26/03</td>
-                    <td rowspan="2" class="comp-cell pc-fusion">Vacances 🌴</td> <td class="mobile-only" data-label="Compétence">Vacances 🌴</td>
+                    <td data-label="Début">22/03</td><td data-label="Fin">26/03</td>
+                    <td rowspan="2" class="comp-cell pc-fusion">Vacances 🌴</td>
+                    <td class="mobile-only" data-label="Compétence">Vacances 🌴</td>
                 </tr>
                 <tr class="vacation">
                     <td class="mobile-header">Mars</td>
                     <td data-label="Semaine">Semaine 7</td>
-                    <td data-label="Début">29/03</td>
-                    <td data-label="Fin">02/04</td>
+                    <td data-label="Début">29/03</td><td data-label="Fin">02/04</td>
                     <td class="mobile-only" data-label="Compétence">Vacances 🌴</td>
                 </tr>
 
@@ -218,29 +219,26 @@
                     <td rowspan="4" class="month-cell pc-fusion">Avril</td>
                     <td class="mobile-header">Avril</td>
                     <td data-label="Semaine">Semaine 8</td>
-                    <td data-label="Début">05/04</td>
-                    <td data-label="Fin">09/04</td>
-                    <td rowspan="4" class="comp-cell pc-fusion">HTML / CSS</td> <td class="mobile-only" data-label="Compétence">HTML / CSS</td>
+                    <td data-label="Début">05/04</td><td data-label="Fin">09/04</td>
+                    <td rowspan="4" class="comp-cell pc-fusion">HTML / CSS</td>
+                    <td class="mobile-only" data-label="Compétence">HTML / CSS</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Avril</td>
                     <td data-label="Semaine">Semaine 9</td>
-                    <td data-label="Début">12/04</td>
-                    <td data-label="Fin">16/04</td>
+                    <td data-label="Début">12/04</td><td data-label="Fin">16/04</td>
                     <td class="mobile-only" data-label="Compétence">HTML / CSS</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Avril</td>
                     <td data-label="Semaine">Semaine 10</td>
-                    <td data-label="Début">19/04</td>
-                    <td data-label="Fin">23/04</td>
+                    <td data-label="Début">19/04</td><td data-label="Fin">23/04</td>
                     <td class="mobile-only" data-label="Compétence">HTML / CSS</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Avril</td>
                     <td data-label="Semaine">Semaine 11</td>
-                    <td data-label="Début">26/04</td>
-                    <td data-label="Fin">30/04</td>
+                    <td data-label="Début">26/04</td><td data-label="Fin">30/04</td>
                     <td class="mobile-only" data-label="Compétence">HTML / CSS</td>
                 </tr>
 
@@ -248,36 +246,33 @@
                     <td rowspan="5" class="month-cell pc-fusion">Mai</td>
                     <td class="mobile-header">Mai</td>
                     <td data-label="Semaine">Semaine 12</td>
-                    <td data-label="Début">03/05</td>
-                    <td data-label="Fin">07/05</td>
-                    <td rowspan="3" class="comp-cell pc-fusion">JavaScript</td> <td class="mobile-only" data-label="Compétence">JavaScript</td>
+                    <td data-label="Début">03/05</td><td data-label="Fin">07/05</td>
+                    <td rowspan="3" class="comp-cell pc-fusion">JavaScript</td>
+                    <td class="mobile-only" data-label="Compétence">JavaScript</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Mai</td>
                     <td data-label="Semaine">Semaine 13</td>
-                    <td data-label="Début">10/05</td>
-                    <td data-label="Fin">14/05</td>
+                    <td data-label="Début">10/05</td><td data-label="Fin">14/05</td>
                     <td class="mobile-only" data-label="Compétence">JavaScript</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Mai</td>
                     <td data-label="Semaine">Semaine 14</td>
-                    <td data-label="Début">17/05</td>
-                    <td data-label="Fin">21/05</td>
+                    <td data-label="Début">17/05</td><td data-label="Fin">21/05</td>
                     <td class="mobile-only" data-label="Compétence">JavaScript</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Mai</td>
                     <td data-label="Semaine">Semaine 15</td>
-                    <td data-label="Début">24/05</td>
-                    <td data-label="Fin">28/05</td>
-                    <td rowspan="4" class="comp-cell pc-fusion">Projet Final</td> <td class="mobile-only" data-label="Compétence">Projet Final</td>
+                    <td data-label="Début">24/05</td><td data-label="Fin">28/05</td>
+                    <td rowspan="4" class="comp-cell pc-fusion">Projet Final</td>
+                    <td class="mobile-only" data-label="Compétence">Projet Final</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Mai</td>
                     <td data-label="Semaine">Semaine 16</td>
-                    <td data-label="Début">31/05</td>
-                    <td data-label="Fin">04/06</td>
+                    <td data-label="Début">31/05</td><td data-label="Fin">04/06</td>
                     <td class="mobile-only" data-label="Compétence">Projet Final</td>
                 </tr>
 
@@ -285,22 +280,19 @@
                     <td rowspan="3" class="month-cell pc-fusion">Juin</td>
                     <td class="mobile-header">Juin</td>
                     <td data-label="Semaine">Semaine 17</td>
-                    <td data-label="Début">07/06</td>
-                    <td data-label="Fin">11/06</td>
+                    <td data-label="Début">07/06</td><td data-label="Fin">11/06</td>
                     <td class="mobile-only" data-label="Compétence">Projet Final</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Juin</td>
                     <td data-label="Semaine">Semaine 18</td>
-                    <td data-label="Début">14/06</td>
-                    <td data-label="Fin">18/06</td>
+                    <td data-label="Début">14/06</td><td data-label="Fin">18/06</td>
                     <td class="mobile-only" data-label="Compétence">Projet Final</td>
                 </tr>
                 <tr>
                     <td class="mobile-header">Juin</td>
                     <td data-label="Semaine">Semaine 19</td>
-                    <td data-label="Début">21/06</td>
-                    <td data-label="Fin">25/06</td>
+                    <td data-label="Début">21/06</td><td data-label="Fin">25/06</td>
                     <td data-label="Compétence" style="color:var(--success); font-weight: bold;">Examen Final 🏆</td>
                 </tr>
             </tbody>
@@ -310,20 +302,59 @@
 
 <script>
 const API = "https://script.google.com/macros/s/AKfycbxSoWJFnf8-6bX8ht7AX93MneYvce1kn0X-he6kjCYVtYO0ZQURbhzoa7S_cpJM7BVb/exec?action=cursus";
-fetch(API).then(r => r.json()).then(data => {
-    const timeline = document.getElementById("timeline");
-    const finished = data.filter(m => m.statut === 'done').length;
-    const progress = Math.round((finished / data.length) * 100);
-    document.getElementById("progress-bar").style.width = progress + "%";
-    document.getElementById("stat-percent").innerText = progress + "%";
-    data.forEach(m => {
-        const card = document.createElement("div");
-        card.className = `step ${m.statut}`;
-        card.innerHTML = `<div class="status-icon"><i data-lucide="book"></i></div><div class="content"><b>${m.titre}</b></div>`;
-        timeline.appendChild(card);
+
+fetch(API)
+    .then(r => r.json())
+    .then(data => {
+        const timeline = document.getElementById("timeline");
+        
+        // Calcul de la progression
+        const total = data.length;
+        const finished = data.filter(m => m.statut === 'done').length;
+        const progressPercent = Math.round((finished / total) * 100);
+        
+        document.getElementById("progress-bar").style.width = progressPercent + "%";
+        document.getElementById("stat-percent").innerText = progressPercent + "%";
+
+        // Génération des cartes
+        data.forEach(m => {
+            // On crée un div (pas un <a> pour garder le contrôle sur le clic)
+            const card = document.createElement("div");
+            card.className = `step ${m.statut}`;
+            
+            // Icônes dynamiques selon statut
+            let icon = 'lock';
+            if(m.statut === 'done') icon = 'check-circle';
+            if(m.statut === 'current') icon = 'play-circle';
+
+            card.innerHTML = `
+                <div class="status-icon"><i data-lucide="${icon}"></i></div>
+                <div class="content">
+                    <b>${m.titre}</b>
+                    <small style="color:var(--text-dim)">${m.duree || ''}</small>
+                </div>
+                ${m.statut !== 'locked' ? '<i data-lucide="arrow-right" style="opacity:0.5"></i>' : ''}
+            `;
+
+            // Logique de clic : On ne clique que si ce n'est pas verrouillé
+            if (m.statut !== "locked") {
+                card.style.cursor = "pointer";
+                card.onclick = () => {
+                    // Redirection vers la page module avec les bons paramètres
+                    window.location.href = `module.html?name=${encodeURIComponent(m.feuille_module)}&titre=${encodeURIComponent(m.titre)}`;
+                };
+            }
+
+            timeline.appendChild(card);
+        });
+        
+        // Initialisation des icônes Lucide
+        lucide.createIcons();
+    })
+    .catch(err => {
+        console.error("Erreur API:", err);
+        document.getElementById("timeline").innerHTML = "<p style='text-align:center; color:red;'>Erreur de chargement des données.</p>";
     });
-    lucide.createIcons();
-});
 </script>
 </body>
 </html>
