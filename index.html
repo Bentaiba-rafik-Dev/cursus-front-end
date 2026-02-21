@@ -22,8 +22,7 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             line-height: 1.6;
         }
 
@@ -35,7 +34,6 @@
             margin-bottom: 40px;
         }
 
-        /* --- STYLE DE L'INSTRUCTOR CARD & AVATAR --- */
         .instructor-card {
             display: inline-flex;
             align-items: center;
@@ -48,50 +46,10 @@
         }
 
         .instructor-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            margin-right: 15px;
-            border: 2px solid white;
-            object-fit: cover;
-            cursor: zoom-in; /* Indique que c'est agrandissable */
-            transition: transform 0.2s;
+            width: 50px; height: 50px;
+            border-radius: 12px; margin-right: 15px;
+            border: 2px solid white; object-fit: cover;
         }
-
-        .instructor-img:hover {
-            transform: scale(1.05);
-        }
-
-        /* --- MODAL / LIGHTBOX POUR L'IMAGE --- */
-        #img-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            align-items: center;
-            justify-content: center;
-            cursor: zoom-out;
-            animation: fadeIn 0.3s;
-        }
-
-        #img-modal img {
-            max-width: 90%;
-            max-height: 80%;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            transform: scale(0.8);
-            animation: zoomIn 0.3s forwards;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes zoomIn { from { transform: scale(0.8); } to { transform: scale(1); } }
-
-        /* --- RESTE DU DESIGN --- */
-        .instructor-info { text-align: left; }
-        .instructor-name { font-weight: 700; display: block; font-size: 1rem; color: white; }
-        .instructor-label { color: #bfdbfe; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
 
         header h1 { margin: 15px 0; font-size: 2.5rem; font-weight: 800; }
 
@@ -99,140 +57,273 @@
         .progress-track { background: rgba(255,255,255,0.2); height: 10px; border-radius: 10px; overflow: hidden; margin-top: 10px; }
         .progress-fill { background: var(--warning); height: 100%; width: 0%; transition: width 1.2s ease; }
 
-        .container { max-width: 800px; margin: auto; padding: 0 20px 100px 20px; }
-        #loader { text-align: center; padding: 40px; color: var(--text-dim); }
-        .timeline { display: flex; flex-direction: column; gap: 16px; }
-
+        .container { max-width: 900px; margin: auto; padding: 0 20px 100px 20px; }
+        
+        .timeline { display: flex; flex-direction: column; gap: 16px; margin-bottom: 60px; }
         .step {
-            background: var(--card-bg);
-            padding: 22px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.05);
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .step:not(.locked):hover {
-            transform: translateY(-4px);
-            background: #243147;
-            border-color: rgba(255,255,255,0.15);
+            background: var(--card-bg); padding: 22px; border-radius: 18px;
+            display: flex; align-items: center; gap: 20px;
+            transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.05);
+            text-decoration: none; color: inherit;
         }
 
         .status-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .content { flex-grow: 1; }
-        .content b { font-size: 1.15rem; display: block; margin-bottom: 4px; }
-        .content span { color: var(--text-dim); font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
-
+        .content b { font-size: 1.15rem; display: block; }
+        
         .done { border-left: 6px solid var(--success); }
-        .done .status-icon { background: rgba(34, 197, 94, 0.15); color: var(--success); }
         .current { border-left: 6px solid var(--warning); }
-        .current .status-icon { background: rgba(250, 204, 21, 0.15); color: var(--warning); }
-        .locked { border-left: 6px solid var(--locked); opacity: 0.6; cursor: not-allowed; }
-        .locked .status-icon { background: rgba(100, 116, 139, 0.1); color: var(--locked); }
+        .locked { border-left: 6px solid var(--locked); opacity: 0.6; }
+
+        .schedule-card {
+            background: var(--card-bg); border-radius: 20px;
+            padding: 25px; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .schedule-card h2 { display: flex; align-items: center; gap: 10px; margin-top: 0; }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        /* --- CONFIGURATION DESKTOP --- */
+        @media (min-width: 768px) {
+            th, td { border: 1px solid rgba(148, 163, 184, 0.2); padding: 12px; text-align: center; }
+            th { background: rgba(255,255,255,0.03); color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase; }
+            .month-cell { font-weight: bold; background: rgba(37, 99, 235, 0.05); }
+            
+            /* Cacher les éléments mobiles sur PC */
+            .mobile-header, .mobile-only { display: none !important; }
+            
+            .vacation { background: rgba(250, 204, 21, 0.1) !important; color: var(--warning); }
+            .comp-cell { font-weight: 600; color: #60a5fa; }
+        }
+
+        /* --- CONFIGURATION MOBILE --- */
+        @media (max-width: 767px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            thead { display: none; }
+            tr { 
+                margin-bottom: 25px; padding: 15px; 
+                border-radius: 15px; background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.1);
+            }
+            td { 
+                display: flex; justify-content: space-between; align-items: center;
+                padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem;
+            }
+            td:last-child { border-bottom: none; }
+            
+            /* Cacher les cellules fusionnées (rowspan) sur mobile */
+            .pc-fusion { display: none !important; }
+
+            td::before { 
+                content: attr(data-label); font-weight: 700; 
+                color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase;
+            }
+
+            .mobile-header { 
+                display: flex !important; justify-content: center; background: var(--primary); 
+                color: white; border-radius: 8px; margin-bottom: 15px; font-weight: bold;
+                padding: 10px; border: none;
+            }
+            .mobile-header::before { content: ""; }
+
+            .vacation { border: 1px solid var(--warning); background: rgba(250, 204, 21, 0.05); }
+        }
     </style>
 </head>
 <body>
 
-<div id="img-modal" onclick="closeImg()">
-    <img id="modal-img" src="" alt="Agrandissement">
-</div>
-
 <header>
     <div class="instructor-card">
-        <img src="9.png" 
-             alt="Bentaiba Rafik" 
-             class="instructor-img" 
-             onclick="openImg(this.src)">
+        <img src="9.png" alt="Bentaiba Rafik" class="instructor-img">
         <div class="instructor-info">
             <span class="instructor-name">Bentaiba Rafik</span>
             <span class="instructor-label">Expert Formateur</span>
         </div>
     </div>
-
     <h1>🎓 Cursus Frontend</h1>
-
     <div class="global-progress">
-        <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700">
-            <span>PROGRESSION DU CURSUS</span>
+        <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+            <span>PROGRESSION</span>
             <span id="stat-percent">0%</span>
         </div>
-        <div class="progress-track">
-            <div class="progress-fill" id="progress-bar"></div>
-        </div>
+        <div class="progress-track"><div class="progress-fill" id="progress-bar"></div></div>
     </div>
 </header>
 
 <div class="container">
-    <div id="loader">Initialisation du cursus étudiant...</div>
-    <div class="timeline" id="timeline"></div>
+    <div id="timeline" class="timeline"></div>
+
+    <div class="schedule-card">
+        <h2><i data-lucide="calendar"></i> Planning 2026</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mois</th><th>Semaine</th><th>Début</th><th>Fin</th><th>Compétence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2" class="month-cell pc-fusion">Février</td>
+                    <td class="mobile-header">Février</td>
+                    <td data-label="Semaine">Semaine 1</td>
+                    <td data-label="Début">15/02</td>
+                    <td data-label="Fin">19/02</td>
+                    <td rowspan="4" class="comp-cell pc-fusion">Initiation</td> <td class="mobile-only" data-label="Compétence">Initiation Web</td> </tr>
+                <tr>
+                    <td class="mobile-header">Février</td>
+                    <td data-label="Semaine">Semaine 2</td>
+                    <td data-label="Début">22/02</td>
+                    <td data-label="Fin">26/02</td>
+                    <td class="mobile-only" data-label="Compétence">Initiation</td>
+                </tr>
+
+                <tr>
+                    <td rowspan="5" class="month-cell pc-fusion">Mars</td>
+                    <td class="mobile-header">Mars</td>
+                    <td data-label="Semaine">Semaine 3</td>
+                    <td data-label="Début">01/03</td>
+                    <td data-label="Fin">05/03</td>
+                    <td class="mobile-only" data-label="Compétence">Initiation</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Mars</td>
+                    <td data-label="Semaine">Semaine 4</td>
+                    <td data-label="Début">08/03</td>
+                    <td data-label="Fin">12/03</td>
+                    <td class="mobile-only" data-label="Compétence">Initiation</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Mars</td>
+                    <td data-label="Semaine">Semaine 5</td>
+                    <td data-label="Début">15/03</td>
+                    <td data-label="Fin">19/03</td>
+                    <td data-label="Compétence" class="comp-cell">Intro Technique Web</td>
+                </tr>
+                <tr class="vacation">
+                    <td class="mobile-header">Mars</td>
+                    <td data-label="Semaine">Semaine 6</td>
+                    <td data-label="Début">22/03</td>
+                    <td data-label="Fin">26/03</td>
+                    <td rowspan="2" class="comp-cell pc-fusion">Vacances 🌴</td> <td class="mobile-only" data-label="Compétence">Vacances 🌴</td>
+                </tr>
+                <tr class="vacation">
+                    <td class="mobile-header">Mars</td>
+                    <td data-label="Semaine">Semaine 7</td>
+                    <td data-label="Début">29/03</td>
+                    <td data-label="Fin">02/04</td>
+                    <td class="mobile-only" data-label="Compétence">Vacances 🌴</td>
+                </tr>
+
+                <tr>
+                    <td rowspan="4" class="month-cell pc-fusion">Avril</td>
+                    <td class="mobile-header">Avril</td>
+                    <td data-label="Semaine">Semaine 8</td>
+                    <td data-label="Début">05/04</td>
+                    <td data-label="Fin">09/04</td>
+                    <td rowspan="4" class="comp-cell pc-fusion">HTML / CSS</td> <td class="mobile-only" data-label="Compétence">HTML / CSS</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Avril</td>
+                    <td data-label="Semaine">Semaine 9</td>
+                    <td data-label="Début">12/04</td>
+                    <td data-label="Fin">16/04</td>
+                    <td class="mobile-only" data-label="Compétence">HTML / CSS</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Avril</td>
+                    <td data-label="Semaine">Semaine 10</td>
+                    <td data-label="Début">19/04</td>
+                    <td data-label="Fin">23/04</td>
+                    <td class="mobile-only" data-label="Compétence">HTML / CSS</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Avril</td>
+                    <td data-label="Semaine">Semaine 11</td>
+                    <td data-label="Début">26/04</td>
+                    <td data-label="Fin">30/04</td>
+                    <td class="mobile-only" data-label="Compétence">HTML / CSS</td>
+                </tr>
+
+                <tr>
+                    <td rowspan="5" class="month-cell pc-fusion">Mai</td>
+                    <td class="mobile-header">Mai</td>
+                    <td data-label="Semaine">Semaine 12</td>
+                    <td data-label="Début">03/05</td>
+                    <td data-label="Fin">07/05</td>
+                    <td rowspan="3" class="comp-cell pc-fusion">JavaScript</td> <td class="mobile-only" data-label="Compétence">JavaScript</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Mai</td>
+                    <td data-label="Semaine">Semaine 13</td>
+                    <td data-label="Début">10/05</td>
+                    <td data-label="Fin">14/05</td>
+                    <td class="mobile-only" data-label="Compétence">JavaScript</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Mai</td>
+                    <td data-label="Semaine">Semaine 14</td>
+                    <td data-label="Début">17/05</td>
+                    <td data-label="Fin">21/05</td>
+                    <td class="mobile-only" data-label="Compétence">JavaScript</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Mai</td>
+                    <td data-label="Semaine">Semaine 15</td>
+                    <td data-label="Début">24/05</td>
+                    <td data-label="Fin">28/05</td>
+                    <td rowspan="4" class="comp-cell pc-fusion">Projet Final</td> <td class="mobile-only" data-label="Compétence">Projet Final</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Mai</td>
+                    <td data-label="Semaine">Semaine 16</td>
+                    <td data-label="Début">31/05</td>
+                    <td data-label="Fin">04/06</td>
+                    <td class="mobile-only" data-label="Compétence">Projet Final</td>
+                </tr>
+
+                <tr>
+                    <td rowspan="3" class="month-cell pc-fusion">Juin</td>
+                    <td class="mobile-header">Juin</td>
+                    <td data-label="Semaine">Semaine 17</td>
+                    <td data-label="Début">07/06</td>
+                    <td data-label="Fin">11/06</td>
+                    <td class="mobile-only" data-label="Compétence">Projet Final</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Juin</td>
+                    <td data-label="Semaine">Semaine 18</td>
+                    <td data-label="Début">14/06</td>
+                    <td data-label="Fin">18/06</td>
+                    <td class="mobile-only" data-label="Compétence">Projet Final</td>
+                </tr>
+                <tr>
+                    <td class="mobile-header">Juin</td>
+                    <td data-label="Semaine">Semaine 19</td>
+                    <td data-label="Début">21/06</td>
+                    <td data-label="Fin">25/06</td>
+                    <td data-label="Compétence" style="color:var(--success); font-weight: bold;">Examen Final 🏆</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-// --- FONCTIONS POUR L'IMAGE ---
-function openImg(src) {
-    const modal = document.getElementById('img-modal');
-    const modalImg = document.getElementById('modal-img');
-    modalImg.src = src;
-    modal.style.display = 'flex';
-}
-
-function closeImg() {
-    document.getElementById('img-modal').style.display = 'none';
-}
-
-// --- LOGIQUE API ---
 const API = "https://script.google.com/macros/s/AKfycbxSoWJFnf8-6bX8ht7AX93MneYvce1kn0X-he6kjCYVtYO0ZQURbhzoa7S_cpJM7BVb/exec?action=cursus";
-
-const statusConfig = {
-    done: { icon: 'check-circle', label: 'Terminé' },
-    current: { icon: 'play-circle', label: 'En cours' },
-    locked: { icon: 'lock', label: 'À venir' }
-};
-
-fetch(API)
-    .then(r => r.json())
-    .then(data => {
-        const timeline = document.getElementById("timeline");
-        document.getElementById("loader").style.display = "none";
-
-        const total = data.length;
-        const finished = data.filter(m => m.statut === 'done').length;
-        const progressPercent = Math.round((finished / total) * 100);
-        
-        document.getElementById("progress-bar").style.width = progressPercent + "%";
-        document.getElementById("stat-percent").innerText = progressPercent + "%";
-
-        data.forEach(m => {
-            const config = statusConfig[m.statut] || statusConfig.locked;
-            const card = document.createElement("div");
-            card.className = `step ${m.statut}`;
-            
-            card.innerHTML = `
-                <div class="status-icon"><i data-lucide="${config.icon}"></i></div>
-                <div class="content">
-                    <b>${m.titre}</b>
-                    <span><i data-lucide="clock" style="width:14px"></i> ${m.duree} • ${config.label}</span>
-                </div>
-                ${m.statut !== 'locked' ? '<i data-lucide="arrow-right" style="color:#475569"></i>' : ''}
-            `;
-
-            if (m.statut !== "locked") {
-                card.onclick = () => {
-                    location.href = `module.html?name=${encodeURIComponent(m.feuille_module)}&titre=${encodeURIComponent(m.titre)}`;
-                };
-            }
-            timeline.appendChild(card);
-        });
-        lucide.createIcons();
-    })
-    .catch(err => {
-        document.getElementById("loader").innerHTML = `<div class="error-msg">Erreur de chargement.</div>`;
+fetch(API).then(r => r.json()).then(data => {
+    const timeline = document.getElementById("timeline");
+    const finished = data.filter(m => m.statut === 'done').length;
+    const progress = Math.round((finished / data.length) * 100);
+    document.getElementById("progress-bar").style.width = progress + "%";
+    document.getElementById("stat-percent").innerText = progress + "%";
+    data.forEach(m => {
+        const card = document.createElement("div");
+        card.className = `step ${m.statut}`;
+        card.innerHTML = `<div class="status-icon"><i data-lucide="book"></i></div><div class="content"><b>${m.titre}</b></div>`;
+        timeline.appendChild(card);
     });
+    lucide.createIcons();
+});
 </script>
-
 </body>
 </html>
